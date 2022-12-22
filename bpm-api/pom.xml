@@ -4,11 +4,10 @@
 	<packaging>jar</packaging>
 	<description>Microservicio para flujos de procesos (bpm)</description>
     
-    <!-- hola mundo-->
 	<parent>
 		<groupId>bpm</groupId>
 		<artifactId>bpm</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<properties>
