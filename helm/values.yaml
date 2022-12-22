@@ -1,0 +1,27 @@
+# K8s namespace
+namespace: tfm-pre-agat-prog
+
+# Nombre de la imagen a desplegar
+image:
+  repository: agatalba/tfm-mca-filemanagement-bpm
+  tag: "latest"
+  
+mysql:
+  host: "mysql-service.tfm-pre-svc-agat-prog.svc.cluster.local"
+  user: "root"
+  
+service:
+  type: ClusterIP
+  port: 8082
+  
+kafka:
+  host: kafka-service
+  port: "29092"
+
+zookeeper:
+  host: zookeeper.tfm-pre-svc-agat-prog.svc.cluster.local
+  port: 2181
+  
+oauth2:
+  host: oauth2
+  port: 8081

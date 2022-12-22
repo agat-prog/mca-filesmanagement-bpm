@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>bpm-api-messaging</artifactId>
+	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>bpm</groupId>
+		<artifactId>bpm</artifactId>
+		<version>1.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<eventuate-commands-version>0.29.0.RELEASE</eventuate-commands-version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>io.eventuate.tram.core</groupId>
+			<artifactId>eventuate-tram-spring-commands</artifactId>
+			<version>${eventuate-commands-version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.eventuate.tram.core</groupId>
+		    <artifactId>eventuate-tram-spring-events</artifactId>
+		    <version>${eventuate-commands-version}</version>
+		</dependency>		
+	</dependencies>	
+</project>

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bpm
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: bpm
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: bpm
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: bpm
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        env:
+          - name: DB_HOST
+            value: "{{ .Values.mysql.host }}"
+          - name: DB_USER
+            value: "{{ .Values.mysql.user }}"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: files-secrets
+                key: mysqlpass
+          - name: KAFKA_HOST
+            value: "{{ .Values.kafka.host }}"
+          - name: KAFKA_PORT
+            value: "{{ .Values.kafka.port }}"
+          - name: ZOOKEEPER_HOST
+            value: "{{ .Values.zookeeper.host }}"
+          - name: ZOOKEEPER_PORT
+            value: "{{ .Values.zookeeper.port }}"
+          - name: USERS_HOST
+            value: "{{ .Values.oauth2.host }}"
+          - name: USERS_PORT
+            value: "{{ .Values.oauth2.port }}"
+        ports:
+          - containerPort: {{ .Values.service.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bpm-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: bpm
+    release: {{ .Release.Name }}     
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: bpm
+  ports:
+  - name: bpm-port
+    port: {{ .Values.service.port }}
