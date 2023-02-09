@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
 @Entity
 @Table(name = "PHASE_INSTANCES")
@@ -25,7 +25,7 @@ public class PhaseInstanceEntity {
 	@Column (name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="ID_PHASE", updatable = false, nullable = false)
 	private PhaseEntity phase;
@@ -33,21 +33,22 @@ public class PhaseInstanceEntity {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="ID_PROCES", updatable = false, nullable = false)
 	private ProcesEntity proces;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name = "DATE", nullable = false, updatable = false)
 	private Date date;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name = "DATE_FINISHED", nullable = true)
-	private Date dateFinished;	
-	
+	private Date dateFinished;
+
 	@Column (name = "USER", updatable = false, nullable = false)
 	private String user;
-	
+
 	@Column (name = "USER_FINISHED", nullable = true)
 	private String userFinished;
-	
+
+	/** Constructor por defecto. */
 	public PhaseInstanceEntity() {
 		super();
 	}
@@ -72,15 +73,23 @@ public class PhaseInstanceEntity {
 	public PhaseEntity getPhase() {
 		return phase;
 	}
-	
-	public PHASE_CODE getPhaseCode() {
-		PHASE_CODE phaseCode = PHASE_CODE.NULL;
+
+	/**
+	 * Devuelve el código de fase.
+	 * @return Código.
+	 */
+	public PhaseCodeEnum getPhaseCode() {
+		PhaseCodeEnum phaseCode = PhaseCodeEnum.NULL;
 		if (Objects.nonNull(this.phase)) {
 			phaseCode = this.phase.getCode();
 		}
 		return phaseCode;
 	}
-	
+
+	/**
+	 * Devuelve la descripción.
+	 * @return Descripción.
+	 */
 	public String getPhaseDescription() {
 		String description = null;
 		if (Objects.nonNull(this.phase)) {

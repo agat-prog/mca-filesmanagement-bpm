@@ -1,6 +1,6 @@
 package mca.filesmanagement.bpm.commons;
 
-public enum PHASE_CODE {
+public enum PhaseCodeEnum {
 	NULL,
 	INICIAL,
 	ANALISIS_TECNICO,

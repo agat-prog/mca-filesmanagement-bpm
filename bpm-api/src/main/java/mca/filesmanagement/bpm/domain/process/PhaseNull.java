@@ -3,26 +3,41 @@ package mca.filesmanagement.bpm.domain.process;
 import java.util.ArrayList;
 import java.util.List;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
-class PhaseNull extends Phase {
+/**
+ * Fase neutra o nula.
+ *
+ * @author agat
+ */
+public class PhaseNull extends Phase {
 
+	/***/
 	public PhaseNull() {
 		super();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected boolean isNavegableTo(PHASE_CODE toPhase) {
+	protected boolean isNavegableTo(PhaseCodeEnum toPhase) {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected boolean isFinish() {
 		return false;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<PHASE_CODE> availablesPhase() {
+	public List<PhaseCodeEnum> availablesPhase() {
 		return new ArrayList<>(0);
 	}
 }
