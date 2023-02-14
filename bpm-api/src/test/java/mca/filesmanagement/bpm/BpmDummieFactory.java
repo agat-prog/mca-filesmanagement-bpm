@@ -4,8 +4,12 @@ import java.util.Date;
 
 import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 import mca.filesmanagement.bpm.commons.PhaseDto;
+import mca.filesmanagement.bpm.commons.PhaseInstanceDto;
 import mca.filesmanagement.bpm.commons.ProcesDto;
 import mca.filesmanagement.bpm.domain.process.ParamCreatePhase;
+import mca.filesmanagement.bpm.infraestructure.model.PhaseEntity;
+import mca.filesmanagement.bpm.infraestructure.model.PhaseInstanceEntity;
+import mca.filesmanagement.bpm.infraestructure.model.ProcesEntity;
 
 /**
  * Factoría de objetos dummy para test.
@@ -47,6 +51,21 @@ public final class BpmDummieFactory {
 		dto.setCode(generateCode(id));
 		dto.setDate(new Date());
 		dto.setId(id);
+		dto.addPhase(createPhaseInstance(id));
+		return dto;
+	}
+
+	/**
+	 * Crea una instancia de fase.
+	 * @param id Identificador
+	 * @return PhaseInstanceDto.
+	 */
+	public static PhaseInstanceDto createPhaseInstance(long id) {
+		PhaseInstanceDto dto = new PhaseInstanceDto();
+		dto.setDate(new Date());
+		dto.setId(id);
+		dto.setUser(String.format(USER_FORMAT, id));
+		dto.setPhaseCode(PhaseCodeEnum.INICIAL);
 		return dto;
 	}
 
@@ -65,6 +84,48 @@ public final class BpmDummieFactory {
 				String.format(USER_FORMAT, id),
 				null);
 		return paramCreatePhase;
+	}
+
+	/**
+	 * Crea una entidad de JPA de un proceso.
+	 * @param id Identificador.
+	 * @return ProcesEntity.
+	 */
+	public static ProcesEntity createProcesEntity(long id) {
+		ProcesEntity procesEntity = new ProcesEntity();
+		procesEntity.setId(id);
+		procesEntity.setActive(true);
+		procesEntity.setCode(generateCode(id));
+		procesEntity.setDate(new Date());
+		return procesEntity;
+	}
+
+	/**
+	 * Crea una entidad de JPA de una fase.
+	 * @param id Identificador.
+	 * @return PhaseEntity.
+	 */
+	public static PhaseEntity createPhaseEntity(long id) {
+		PhaseEntity entity = new PhaseEntity();
+		entity.setCode(PhaseCodeEnum.INICIAL);
+		entity.setDescription(String.format(DESCRIPCION_FORMAT, id));
+		entity.setId(id);
+		return entity;
+	}
+
+	/**
+	 * Crea una entidad de JPA de una instancia de fase.
+	 * @param id Identificador.
+	 * @return PhaseInstanceEntity.
+	 */
+	public static PhaseInstanceEntity createPhaseInstanceEntity(long id) {
+		PhaseInstanceEntity entity = new PhaseInstanceEntity();
+		entity.setDate(new Date());
+		entity.setId(id);
+		entity.setPhase(createPhaseEntity(id));
+		entity.setProces(createProcesEntity(id));
+		entity.setUser(String.format(USER_FORMAT, id));
+		return entity;
 	}
 
 	/**

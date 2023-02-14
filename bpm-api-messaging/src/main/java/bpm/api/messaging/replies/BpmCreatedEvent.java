@@ -3,10 +3,11 @@ package bpm.api.messaging.replies;
 import java.util.UUID;
 
 public class BpmCreatedEvent {
-	
+
 	private UUID uuid;
 	private String phase;
 
+	/***/
 	public BpmCreatedEvent() {
 		super();
 	}
