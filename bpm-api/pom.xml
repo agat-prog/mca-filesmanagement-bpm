@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>bpm</groupId>
 		<artifactId>bpm</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 
 	<properties>
