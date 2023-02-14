@@ -2,15 +2,21 @@ package mca.filesmanagement.bpm.commons;
 
 import java.util.Date;
 
+/**
+ * DTO de una instancia de Phase.
+ *
+ * @author agat
+ */
 public class PhaseInstanceDto {
 	private Long id;
-	private PHASE_CODE phaseCode;
+	private PhaseCodeEnum phaseCode;
 	private String phaseDescription;
 	private Date date;
-	private Date dateFinished;	
+	private Date dateFinished;
 	private String user;
 	private String userFinished;
-	
+
+	/** Constructor por defecto. */
 	public PhaseInstanceDto() {
 		super();
 	}
@@ -32,14 +38,14 @@ public class PhaseInstanceDto {
 	/**
 	 * @return the phaseCode
 	 */
-	public PHASE_CODE getPhaseCode() {
+	public PhaseCodeEnum getPhaseCode() {
 		return phaseCode;
 	}
 
 	/**
 	 * @param phaseCode the phaseCode to set
 	 */
-	public void setPhaseCode(PHASE_CODE phaseCode) {
+	public void setPhaseCode(PhaseCodeEnum phaseCode) {
 		this.phaseCode = phaseCode;
 	}
 

@@ -11,30 +11,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
 @Entity
 @Table(name = "PHASES")
 public class PhaseEntity {
-	
+
 	@Id
 	@Column (name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column (name = "CODE")
 	@Enumerated(EnumType.STRING)
-	private PHASE_CODE code = PHASE_CODE.NULL;
-	
+	private PhaseCodeEnum code = PhaseCodeEnum.NULL;
+
 	@Column (name = "DESCRIPTION")
 	private String description;
-	
+
+	/** Constructor por defecto. */
 	public PhaseEntity() {
 		super();
 	}
 
 	/**
-	 * @return the id
+	 * @return the id.
 	 */
 	public Long getId() {
 		return id;
@@ -50,18 +51,17 @@ public class PhaseEntity {
 	/**
 	 * @return the code
 	 */
-	public PHASE_CODE getCode() {
+	public PhaseCodeEnum getCode() {
 		return code;
 	}
-	
+
 	/**
 	 * @param code the code to set
 	 */
-	public void setCode(PHASE_CODE code) {
+	public void setCode(PhaseCodeEnum code) {
 		if (Objects.isNull(code)) {
-			this.code = PHASE_CODE.NULL;
-		}
-		else {
+			this.code = PhaseCodeEnum.NULL;
+		} else {
 			this.code = code;
 		}
 	}

@@ -3,26 +3,41 @@ package mca.filesmanagement.bpm.domain.process;
 import java.util.Arrays;
 import java.util.List;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
-class PhaseInitial extends Phase {
-	
+/**
+ * Fase inicial de un proceso.
+ *
+ * @author agat
+ */
+public class PhaseInitial extends Phase {
+
+	/** Constructor por defecto. */
 	public PhaseInitial() {
 		super();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected boolean isNavegableTo(PHASE_CODE toPhase) {
-		return PHASE_CODE.ANALISIS_TECNICO.equals(toPhase);
+	protected boolean isNavegableTo(PhaseCodeEnum toPhase) {
+		return PhaseCodeEnum.ANALISIS_TECNICO.equals(toPhase);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected boolean isFinish() {
 		return false;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<PHASE_CODE> availablesPhase() {
-		return Arrays.asList(PHASE_CODE.ANALISIS_TECNICO);
+	public List<PhaseCodeEnum> availablesPhase() {
+		return Arrays.asList(PhaseCodeEnum.ANALISIS_TECNICO);
 	}
 }

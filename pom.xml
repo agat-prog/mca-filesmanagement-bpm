@@ -4,7 +4,7 @@
 
 	<groupId>bpm</groupId>
 	<artifactId>bpm</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 	<packaging>pom</packaging>
 
 	<name>bpm-root-project</name>
@@ -51,4 +51,42 @@
 		<module>bpm-api-messaging</module>
 		<module>bpm-api</module>
 	</modules>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>${checkstyle-maven-plugin.version}</version>
+					<configuration>
+						<violationSeverity>error</violationSeverity>
+						<configLocation>/checkstyle/checkstyle.xml</configLocation>
+						<sourceDirectories>
+							<sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+						</sourceDirectories>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>3.19.0</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.8</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>	
 </project>

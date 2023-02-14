@@ -8,7 +8,8 @@ public class ProcessUpdatedEvent implements ProcessDomainEvent {
 	private Date date;
 	private String phaseCode;
 	private String phaseName;
-	
+
+	/***/
 	public ProcessUpdatedEvent() {
 		super();
 	}
@@ -69,10 +70,13 @@ public class ProcessUpdatedEvent implements ProcessDomainEvent {
 		this.phaseName = phaseName;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return String.format("ProcessUpdatedEvent [code=%s, date=%s, phaseCode=%s, phaseName=%s]", code, date,
 				phaseCode, phaseName);
 	}
-	
+
 }

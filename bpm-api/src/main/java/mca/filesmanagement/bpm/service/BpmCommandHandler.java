@@ -21,55 +21,71 @@ import mca.filesmanagement.bpm.commons.ProcesDto;
 import mca.filesmanagement.bpm.port.in.IProcesUseCase;
 
 public class BpmCommandHandler {
-	
+
 	private static Logger LOGGER = LoggerFactory.getLogger(BpmCommandHandler.class);
 
 	private IProcesUseCase procesUseCase;
 
+	/**
+	 * Crea un commandHandler para la SAGA de creación.
+	 * @param procesUseCase Servicio para casos de usos de procesos.
+	 */
 	public BpmCommandHandler(IProcesUseCase procesUseCase) {
 		super();
-		
+
 		this.procesUseCase = procesUseCase;
 	}
-	
+
+	/**
+	 * Devuelve un commandHandler configurado para la creación de la SAGA.
+	 * @return commandHandler.
+	 */
 	public CommandHandlers commandHandlerDefinitions() {
 		return SagaCommandHandlersBuilder.fromChannel(BpmChannels.CHANNEL_BPM_SERVICE)
 				.onMessage(CreateBpmCommand.class, this::createBpm)
 				.onMessage(DeleteBpmCommand.class, this::deleteBpm)
 				.build();
 	}
-	
+
+	/**
+	 * Crea un proceso BPM a partir de un evento proveniente de una cola.
+	 * @param cmd Comando que contiene el evento recibido.
+	 * @return Mensaje a devolver: Success o Failure en caso de error.
+	 */
 	public Message createBpm(CommandMessage<CreateBpmCommand> cmd) {
 		try {
 			CreateBpmCommand command = cmd.getCommand();
 			LOGGER.info(String.format("createBpm user -->  %s", command.getUser()));
 			System.out.println("createBpm ... EUREKA");
-			
+
 			Long id = this.procesUseCase.createProces(command.getUser());
 			ProcesDto proces = this.procesUseCase.findById(id);
-			
+
 			Assert.assertFalse(proces.getPhases().isEmpty());
-			
+
 			BpmCreatedEvent event = new BpmCreatedEvent();
 			event.setPhase(proces.getPhases().get(0).getPhaseCode().name());
 			event.setUuid(UUID.fromString(proces.getCode()));
 			return withSuccess(event);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			return withFailure();
 		}
 	}
-	
+
+	/**
+	 * Elimina un proceso BPM a partir de un evento proveniente de una cola.
+	 * @param cmd Comando que contiene el evento recibido.
+	 * @return Mensaje a devolver: Success o Failure en caso de error.
+	 */
 	public Message deleteBpm(CommandMessage<DeleteBpmCommand> cmd) {
 		try {
 			DeleteBpmCommand command = cmd.getCommand();
 
-			System.out.println("Eliminando bpm: " + command.getUuid().toString());
-			
+			LOGGER.info("Eliminando bpm: " + command.getUuid().toString());
+
 			this.procesUseCase.deleteByCode(command.getUuid().toString());
 			return withSuccess();
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			return withFailure();
 		}
 	}

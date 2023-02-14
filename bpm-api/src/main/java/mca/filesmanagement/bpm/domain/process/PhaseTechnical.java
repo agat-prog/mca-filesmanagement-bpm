@@ -3,27 +3,42 @@ package mca.filesmanagement.bpm.domain.process;
 import java.util.Arrays;
 import java.util.List;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
-class PhaseTechnical extends Phase {
+/**
+ * Fase de análisis técnico.
+ *
+ * @author agat
+ */
+public class PhaseTechnical extends Phase {
 
+	/***/
 	public PhaseTechnical() {
 		super();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected boolean isNavegableTo(PHASE_CODE toPhase) {
-		return PHASE_CODE.RECHAZADO.equals(toPhase) 
-				|| PHASE_CODE.VALIDADO.equals(toPhase);
+	protected boolean isNavegableTo(PhaseCodeEnum toPhase) {
+		return PhaseCodeEnum.RECHAZADO.equals(toPhase)
+				|| PhaseCodeEnum.VALIDADO.equals(toPhase);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected boolean isFinish() {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<PHASE_CODE> availablesPhase() {
-		return Arrays.asList(PHASE_CODE.RECHAZADO, PHASE_CODE.VALIDADO);
+	public List<PhaseCodeEnum> availablesPhase() {
+		return Arrays.asList(PhaseCodeEnum.RECHAZADO, PhaseCodeEnum.VALIDADO);
 	}
 }

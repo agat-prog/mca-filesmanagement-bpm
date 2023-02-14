@@ -1,10 +1,16 @@
 package mca.filesmanagement.bpm.commons;
 
+/**
+ * DTO de la Phase.
+ *
+ * @author agat
+ */
 public class PhaseDto {
 	private Long id;
-	private PHASE_CODE code;
+	private PhaseCodeEnum code;
 	private String description;
-	
+
+	/** Constructor por defecto. */
 	public PhaseDto() {
 		super();
 	}
@@ -26,14 +32,14 @@ public class PhaseDto {
 	/**
 	 * @return the code
 	 */
-	public PHASE_CODE getCode() {
+	public PhaseCodeEnum getCode() {
 		return code;
 	}
 
 	/**
 	 * @param code the code to set
 	 */
-	public void setCode(PHASE_CODE code) {
+	public void setCode(PhaseCodeEnum code) {
 		this.code = code;
 	}
 

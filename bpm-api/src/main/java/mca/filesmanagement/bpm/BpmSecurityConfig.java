@@ -10,16 +10,20 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BpmSecurityConfig {
-	
+
 	@Value("${mca.filesmanagement.bpm.oauth2.clientid}")
 	private String oauthClientId;
-	
+
 	@Value("${mca.filesmanagement.bpm.oauth2.clientsecret}")
 	private String oauthSecret;
-	
+
 	@Value("${mca.filesmanagement.bpm.oauth2.checktokenendpointurl}")
 	private String checkTokenEndPoint;
-	
+
+	/**
+	 * Servicio de tocken para la conexión con OAuth2.
+	 * @return Servicio.
+	 */
 	@Bean
 	public ResourceServerTokenServices tokenService() {
 		RemoteTokenServices tokenService = new RemoteTokenServices();

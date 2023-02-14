@@ -6,10 +6,15 @@ import java.util.List;
 
 import bpm.api.messaging.events.ProcessUpdatedEvent;
 import mca.filesmanagement.bpm.commons.BpmException;
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 import mca.filesmanagement.bpm.port.out.IProcesRepository;
 import mca.filesmanagement.bpm.port.out.IPublicationService;
 
+/**
+ * Agregado de un proceso.
+ *
+ * @author agat
+ */
 public class ProcessAggregate {
 
 	private String id;
@@ -18,33 +23,49 @@ public class ProcessAggregate {
 	private List<Phase> phases = new ArrayList<>();
 	private IPublicationService publisher;
 	private IProcesRepository procesRepository;
-	
+
+	/**
+	 * Constructor con el identificador único.
+	 * @param id Identificador del proceso.
+	 */
 	public ProcessAggregate(String id) {
 		super();
-		
+
 		this.id = id;
 	}
-	
+
+	/**
+	 * Establece la finalización del proceso de creación del agregado.
+	 */
 	public void afterCreated() {
 		this.publishProcessUpdateEvent();
 	}
-	
-	public void next(String user, PHASE_CODE toPhase) throws BpmException {
+
+	/**
+	 * Realiza el trámite hacía la siguiente fase en un proceso.
+	 * @param user Usuario que tramita la fase.
+	 * @param toPhase Código externo de la fase hacía la que se va a tramitar.
+	 * @throws BpmException Excepción lanzada ante la imposibilidad de tramitar.
+	 */
+	public void next(String user, PhaseCodeEnum toPhase) throws BpmException {
 		Phase newPhase = FactoryPhase.create(toPhase);
 		newPhase.setUser(user);
-		newPhase.setDescription(this.procesRepository.findByCode(newPhase.getCode()).getDescription());
+		newPhase.setDescription(this.procesRepository.findPhaseByCode(newPhase.getCode()).getDescription());
 		newPhase.setHasChanged(true);
-		
+
 		this.getActualPhase().next(newPhase);
 		this.phases.add(newPhase);
-		
+
 		if (newPhase.isFinish()) {
 			this.deactivate();
 		}
-		
+
 		this.publishProcessUpdateEvent();
 	}
-	
+
+	/**
+	 * Publica un evento de actualización de un agregado.
+	 */
 	private void publishProcessUpdateEvent() {
 		ProcessUpdatedEvent event = new ProcessUpdatedEvent();
 		event.setCode(this.id);
@@ -53,7 +74,11 @@ public class ProcessAggregate {
 		event.setPhaseName(getActualPhase().getDescription());
 		this.publisher.notify(this, event);
 	}
-	
+
+	/**
+	 * Añade una fase nueva.
+	 * @param param DTO con los datos de la fase a añadir.
+	 */
 	public void addPhase(ParamCreatePhase param) {
 		Phase phase = FactoryPhase.create(param.code());
 		phase.setDate(param.date());
@@ -62,24 +87,33 @@ public class ProcessAggregate {
 		phase.setId(param.Id());
 		phase.setUser(param.user());
 		phase.setUserFinished(param.userFinished());
-		
+
 		// La fase introducida debe tener fecha posterior a la última introducida
 		if (!this.isDateAfter(phase)) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		this.phases.add(phase);
 	}
-	
+
+	/**
+	 * Devuelve la fase actual en la que se encuentra un proceso.
+	 *
+	 * @return Fase actual.
+	 */
 	public Phase getActualPhase() {
 		if (!this.phases.isEmpty()) {
 			return this.phases.get(this.phases.size() - 1);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
+	/**
+	 * Valida si una fase es posterior a la actual.
+	 * @param phase Fase sobre la que se consulta.
+	 * @return true si la fase consultada es posterior o false en caso contrario.
+	 */
 	private boolean isDateAfter(Phase phase) {
 		boolean question = true;
 		if (!this.phases.isEmpty()
@@ -110,6 +144,9 @@ public class ProcessAggregate {
 		return active;
 	}
 
+	/**
+	 * Desactiva el proceso.
+	 */
 	protected void deactivate() {
 		this.active = false;
 	}

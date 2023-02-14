@@ -5,15 +5,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * DTO de un proceso.
+ *
+ * @author agat
+ */
 public class ProcesDto {
 
 	private Long id;
 	private String code;
 	private boolean active;
 	private Date date;
-	
 	private List<PhaseInstanceDto> phases = new ArrayList<>(0);
-	
+
+	/** Constructor por defecto. */
 	public ProcesDto() {
 		super();
 	}
@@ -80,7 +85,11 @@ public class ProcesDto {
 	public List<PhaseInstanceDto> getPhases() {
 		return phases;
 	}
-	
+
+	/**
+	 * Añade una instancia de fase a la lista.
+	 * @param phaseDto
+	 */
 	public void addPhase(PhaseInstanceDto phaseDto) {
 		if (Objects.nonNull(phaseDto)) {
 			this.phases.add(phaseDto);

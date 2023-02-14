@@ -3,27 +3,41 @@ package mca.filesmanagement.bpm.domain.process;
 import java.util.Arrays;
 import java.util.List;
 
-import mca.filesmanagement.bpm.commons.PHASE_CODE;
+import mca.filesmanagement.bpm.commons.PhaseCodeEnum;
 
-class PhaseRefused extends Phase {
-
+/**
+ * Fase rechazada de un proceso.
+ *
+ * @author agat
+ */
+public class PhaseRefused extends Phase {
+	/***/
 	public PhaseRefused() {
 		super();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	protected boolean isNavegableTo(PHASE_CODE toPhase) {
-		return PHASE_CODE.INICIAL.equals(toPhase) 
-				|| PHASE_CODE.FINALIZADO.equals(toPhase);
+	protected boolean isNavegableTo(PhaseCodeEnum toPhase) {
+		return PhaseCodeEnum.INICIAL.equals(toPhase)
+				|| PhaseCodeEnum.FINALIZADO.equals(toPhase);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected boolean isFinish() {
 		return false;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<PHASE_CODE> availablesPhase() {
-		return Arrays.asList(PHASE_CODE.INICIAL, PHASE_CODE.FINALIZADO);
+	public List<PhaseCodeEnum> availablesPhase() {
+		return Arrays.asList(PhaseCodeEnum.INICIAL, PhaseCodeEnum.FINALIZADO);
 	}
 }

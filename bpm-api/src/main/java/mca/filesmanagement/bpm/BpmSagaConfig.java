@@ -17,12 +17,23 @@ import mca.filesmanagement.bpm.service.BpmCommandHandler;
 @EnableAutoConfiguration
 @EnableJpaRepositories
 public class BpmSagaConfig {
-	
+
+	/**
+	 * Devuelve el bean correspondiente al Handler de comandos para la creación de SAGA.
+	 * @param procesUseCase
+	 * @return Handler de la SAGA de creación.
+	 */
 	@Bean
 	public BpmCommandHandler bpmCommandHandler(IProcesUseCase procesUseCase) {
 		return new BpmCommandHandler(procesUseCase);
 	}
 
+	/**
+	 * Devuelve el CommandDispatcher asociado a la SAGA.
+	 * @param target Handler
+	 * @param sagaCommandDispatcherFactory Factoría
+	 * @return El CommmandDispatcher creado por la factoría.
+	 */
 	@Bean
 	public CommandDispatcher consumerCommandDispatcher(BpmCommandHandler target,
 			SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {

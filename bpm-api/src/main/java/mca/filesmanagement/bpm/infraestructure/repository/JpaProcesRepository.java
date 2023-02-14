@@ -9,6 +9,11 @@ import mca.filesmanagement.bpm.infraestructure.model.ProcesEntity;
 
 @Repository
 public interface JpaProcesRepository extends JpaRepository<ProcesEntity, Long> {
+	/**
+	 * Devuelve la PK de un proceso a partir de su código externo único.
+	 * @param code Código externo único.
+	 * @return Id o PK.
+	 */
 	@Query("SELECT p.id FROM ProcesEntity p WHERE p.code = :code")
 	Long getIdByCode(@Param("code") String code);
 }

@@ -19,17 +19,18 @@ public class ProcesEntity {
 	@Column (name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column (name = "CODE", nullable = false, updatable = false)
 	private String code;
-	
+
 	@Column (name = "ACTIVE")
 	private boolean active;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name = "DATE", nullable = false, updatable = false)
 	private Date date;
-	
+
+	/** Constructor por defecto. */
 	public ProcesEntity() {
 		super();
 	}
